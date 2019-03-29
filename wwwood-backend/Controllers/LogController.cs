@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using wwwoodbackend.Models;
 using Microsoft.AspNetCore.Cors;
 
-
 namespace wwwoodbackend.Controllers
 {
     [Route("api/logs")]
