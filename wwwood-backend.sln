@@ -1,9 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wwwood-backend", "wwwood-backend\wwwood-backend.csproj", "{261263E6-463C-4684-8157-24AE15997564}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wwwood-backend", "wwwood-backend\wwwood-backend.csproj", "{E3B2950C-C350-458A-A1EA-1C9C5608BFD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +9,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{261263E6-463C-4684-8157-24AE15997564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{261263E6-463C-4684-8157-24AE15997564}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{261263E6-463C-4684-8157-24AE15997564}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{261263E6-463C-4684-8157-24AE15997564}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E0BB044C-74A4-465B-A05B-C646FCFD667D}
+		{E3B2950C-C350-458A-A1EA-1C9C5608BFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3B2950C-C350-458A-A1EA-1C9C5608BFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3B2950C-C350-458A-A1EA-1C9C5608BFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3B2950C-C350-458A-A1EA-1C9C5608BFD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
