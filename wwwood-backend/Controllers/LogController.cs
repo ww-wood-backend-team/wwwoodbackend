@@ -30,10 +30,26 @@ namespace wwwoodbackend.Controllers
             }
         }
 
+
+        //filter logs
+        //GET: api/logs?from="fdate"&to="tdate"&type="types"&search="search"
+        //GET: api/logs?id="id"&name="name"
+        
+        [HttpGet("id={id}&name={name}")]
+        [EnableCors("AllowAllHeaders")]
+        public async Task<ActionResult<Log>> FilterLogs(long id, string name){
+            var log = await _context.Logs.FindAsync(id);
+            if (log.Name == name)
+            {
+                return log;
+            }
+            else return NotFound();
+        }
+
         // GET: api/Logs
         [HttpGet]
         [EnableCors("AllowAllHeaders")]
-        public async Task<ActionResult<IEnumerable<Log>>> FilterLogs()
+        public async Task<ActionResult<IEnumerable<Log>>> ListLogs()
         {
             return await _context.Logs.ToListAsync();
         }
