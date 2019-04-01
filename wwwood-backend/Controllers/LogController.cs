@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using wwwoodbackend.Models;
 using Microsoft.AspNetCore.Cors;
 
+
 namespace wwwoodbackend.Controllers
 {
     [Route("api/logs")]
@@ -30,11 +31,17 @@ namespace wwwoodbackend.Controllers
             }
         }
 
+        //////Refresh every ten seconds
+        //public ActionResult Index()
+        //{
+        //    Response.AddHeader("Refresh", "10");
+        //    return View();
+        //}
 
         //filter logs
         //GET: api/logs?from="fdate"&to="tdate"&type="types"&search="search"
         //GET: api/logs?id="id"&name="name"
-        
+
         [HttpGet("id={id}&name={name}")]
         [EnableCors("AllowAllHeaders")]
         public async Task<ActionResult<Log>> FilterLogs(long id, string name){

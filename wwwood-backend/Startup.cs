@@ -22,9 +22,8 @@ namespace wwwood_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LogContext>(opt =>
-                opt
-            //.UseSqlServer(Configuration.GetConnectionString("WWWoodDbContext")));
-                .UseInMemoryDatabase("LogList"));
+                opt.UseSqlServer(Configuration.GetConnectionString("WWWoodDatabase")));
+               // .UseInMemoryDatabase("LogList"));
 
 
 
