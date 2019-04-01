@@ -24,14 +24,14 @@ namespace wwwoodbackend.Controllers
             {
                 // Create a new LogItem if collection is empty,
                 // which means you can't delete all LogItems.
-                _context.Logs.Add(new Log { Name = "Item1" });
-                _context.Logs.Add(new Log { Name = "Item2" });
-                _context.Logs.Add(new Log { Name = "Item3" });
+                _context.Logs.Add(new Log { LogEntryId=1, SessionId = "1", AssemblyId="1", NotifyIncident="1"  });
+                _context.Logs.Add(new Log { LogEntryId = 2, SessionId = "2", AssemblyId = "2", NotifyIncident = "2" });
+                //_context.Logs.Add(new Log { Message = "Item3" });
                 _context.SaveChanges();
             }
         }
 
-        //////Refresh every ten seconds
+        ///////Refresh every ten seconds
         //public ActionResult Index()
         //{
         //    Response.AddHeader("Refresh", "10");
@@ -46,7 +46,7 @@ namespace wwwoodbackend.Controllers
         [EnableCors("AllowAllHeaders")]
         public async Task<ActionResult<Log>> FilterLogs(long id, string name){
             var log = await _context.Logs.FindAsync(id);
-            if (log.Name == name)
+            if (log.Message == name)
             {
                 return log;
             }
@@ -84,7 +84,7 @@ namespace wwwoodbackend.Controllers
             _context.Logs.Add(log);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(SelectLog), new { id = log.Id }, log);
+            return CreatedAtAction(nameof(SelectLog), new { id = log.LogEntryId }, log);
         }
 
         // PUT: api/Logs/5
@@ -92,7 +92,7 @@ namespace wwwoodbackend.Controllers
         [EnableCors("AllowAllHeaders")]
         public async Task<IActionResult> PutLogs(long id, Log log)
         {
-            if (id != log.Id)
+            if (id != log.LogEntryId)
             {
                 return BadRequest();
             }
