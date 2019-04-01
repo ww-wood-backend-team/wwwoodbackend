@@ -30,8 +30,13 @@ namespace wwwoodbackend.Controllers
                 _context.SaveChanges();
             }
         }
+<<<<<<< HEAD
 
         ///////Refresh every ten seconds
+=======
+        
+        //////Refresh every ten seconds
+>>>>>>> 64a821e3cc4ff9df2e02b706fe2dd1bd56a79ac1
         //public ActionResult Index()
         //{
         //    Response.AddHeader("Refresh", "10");
