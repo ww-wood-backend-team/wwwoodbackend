@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using wwwoodbackend.Models;
 using Microsoft.AspNetCore.Cors;
 
-
 namespace wwwoodbackend.Controllers
 {
     [Route("api/logs")]
@@ -30,13 +29,8 @@ namespace wwwoodbackend.Controllers
                 _context.SaveChanges();
             }
         }
-<<<<<<< HEAD
 
-        ///////Refresh every ten seconds
-=======
-        
         //////Refresh every ten seconds
->>>>>>> 64a821e3cc4ff9df2e02b706fe2dd1bd56a79ac1
         //public ActionResult Index()
         //{
         //    Response.AddHeader("Refresh", "10");
@@ -46,17 +40,12 @@ namespace wwwoodbackend.Controllers
         //filter logs
         //GET: api/logs?from="fdate"&to="tdate"&type="types"&search="search"
         //GET: api/logs?id="id"&name="name"
-
+        /*
         [HttpGet("id={id}&name={name}")]
         [EnableCors("AllowAllHeaders")]
-        public async Task<ActionResult<Log>> FilterLogs(long id, string name){
-            var log = await _context.Logs.FindAsync(id);
-            if (log.Message == name)
-            {
-                return log;
-            }
-            else return NotFound();
-        }
+        public async Task<ActionResult<Log>> FilterLogs(long id, string name) {
+            //var query = _context.Logs.Where<>
+        }*/
 
         // GET: api/Logs
         [HttpGet]
@@ -71,7 +60,7 @@ namespace wwwoodbackend.Controllers
         [EnableCors("AllowAllHeaders")]
         public async Task<ActionResult<Log>> SelectLog(long id)
         {
-            var log = await _context.Logs.FindAsync(id);
+            var log = await _context.Logs.FindAsync();
 
             if (log == null)
             {
