@@ -103,7 +103,7 @@ namespace wwwoodbackend.Controllers
         //// GET: api/Logs
         [HttpGet]
         [EnableCors("AllowAllHeaders")]
-        public IEnumerable<Log> ListLogs()
+        public IEnumerable<SlimLog> ListLogs()
         {
             //string connectionString = configuration.GetConnectionString("WWWoodDatabase");
             //_conn = new SqlConnection("Server=13.65.80.168;Database=Auditing;User Id=semocapstone;Password=Capstone2019;Connection Timeout=60");
@@ -148,13 +148,13 @@ namespace wwwoodbackend.Controllers
             };
 
             _adapter.Fill(_dt);
-            List<Log> logs = new List<Models.Log>(_dt.Rows.Count);
+            List<SlimLog> logs = new List<Models.SlimLog>(_dt.Rows.Count);
 
             if (_dt.Rows.Count > 0)
             {
                 foreach (DataRow logrecord in _dt.Rows)
                 {
-                    logs.Add(new ReadLog(logrecord));
+                    logs.Add(new SlimLog.SlimReadLog(logrecord));
                 }
 
             }

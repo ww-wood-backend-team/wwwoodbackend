@@ -42,7 +42,7 @@ namespace wwwoodbackend.Models
             Timestamp = row["Timestamp"].ToString();
             LogEntryType = row["LogEntryType"].ToString();
             Message = row["Message"].ToString();
-            ExceptionJson = row["ExceptionJson"].ToString();
+            ExceptionJson = row["ExceptionJson"].ToString().Replace("\r\n", String.Empty);
             FileName = row["FileName"].ToString();
             MethodName = row["MethodName"].ToString();
             LineNumber = Convert.ToInt32(row["LineNumber"]);
@@ -64,6 +64,8 @@ namespace wwwoodbackend.Models
             LogData = row["LogData"].ToString();
 
         }
+
+
 
         public long LogEntryId { get; set; }
         public string Timestamp { get; set; }
@@ -91,3 +93,5 @@ namespace wwwoodbackend.Models
         public string LogData { get; set; }
     }
 }
+
+
