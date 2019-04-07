@@ -7,8 +7,9 @@ namespace wwwoodbackend.Models
         public LogContext(DbContextOptions<LogContext> options)
         : base(options)
         {
+            this.Database.SetCommandTimeout(300);
         }
 
-        public DbSet<Log> Logs { get; set; }
+        public DbSet<Log> ApplicationLogs { get; set; }
     }
 }
