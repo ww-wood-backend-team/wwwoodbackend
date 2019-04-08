@@ -9,11 +9,7 @@ namespace wwwoodbackend.Models
         [Key]
         public long LogEntryId { get; set; }
         public string Timestamp { get; set; }
-        public string LogEntryType
-        {
-            get; set;
-
-        }
+        public string LogEntryType{get; set;}
 
 
         public class SlimReadLog : SlimLog

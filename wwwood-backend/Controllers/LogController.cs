@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Cors;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace wwwoodbackend.Controllers
 {
@@ -85,35 +86,48 @@ namespace wwwoodbackend.Controllers
         //    return View();
         //}
 
+
         ////filter logs
-        ///GET: api/logs/?from="fdate"&to="tdate"&type="types"&search="keyword"
-        ///Example: https://localhost:44393/api/logs/from=2019-01-01&to=2019-01-20&type=Information&search=dummy
+        //GET: api/logs/?from="fdate"&to="tdate"&type="types"&search="keyword"
+        //Example: https://localhost:44393/api/logs/from=2019-01-01&to=2019-01-20&type=Information&search=dummy
         ///Uses a datetime date (year-mo-da) formatted string to search inbetween two dates ("from" and "to")
         ///searches for a log with LogEntryType that matches the "type"
         ///will search for a log with keyword "keyword" -- not functional yet, I'm not sure this is what it was supposed to be.  I cannot remember.
         ///Not built to withstand incorrect inputs yet, so just make make sure inputs are correct when testing.
         [HttpGet("from={from}&to={to}&type={type}&search={keyword}")]
         [EnableCors("AllowAllHeaders")]
-        public IEnumerable<Log> FilterLogs(string from, string to, string type, string keyword){
-            using (SqlConnection connection = new SqlConnection("Server=13.65.80.168,1433;Database=Auditing;User Id=semocapstone;Password=Capstone2019"))
-            {
-                connection.Open();
+        public IEnumerable<SlimLog> FilterLogs(string from,string to,string type,string keyword) 
+        {
+
+            SqlConnection connection = new SqlConnection("Server=13.65.80.168,1433;Database=Auditing;User Id=semocapstone;Password=Capstone2019;Connection Timeout=300");
+            connection.Open();
                 DataTable _dt = new DataTable();
-                var queryString =
-                    //Selects top 10 for now, Simone says there is a timeout issue right now.
-                    "select top 10 * from [Auditing].[dbo].[ApplicationLogs]" +
-                    //Searches for the log with the matching type
-                    "where [LogEntryType] = '" + type + "' and " +
-                    //Searches for a log from midnight on the earliest date to ll:59:59PM on the last date
-                    "[Timestamp] >= '" + from + "' 00:00:00' and[Timestamp] <= '" + to + "' 23:59:59'; ";
-                _adapter = new SqlDataAdapter { SelectCommand = new SqlCommand(queryString, connection) };
-                
-                //creates the list of matching logs and returns it
-                _adapter.Fill(_dt);  /////////////////System.Data.SqlClient.SqlException: 'Incorrect syntax near '00'.'
-                List<Log> logs = new List<Models.Log>(_dt.Rows.Count);
-                return logs;
-                
+            var queryString =
+                "SELECT TOP (10) * FROM [Auditing].[dbo].[ApplicationLogs] WHERE [LogEntryType] = '" + type + "' AND [Timestamp] >= '" + from + " 00:00:00 ' AND [Timestamp] <= '" + to + " 23:59:59 '";
+            //Selects top 10 for now, Simone says there is a timeout issue right now.
+            //"SELECT TOP (10) * FROM [Auditing].[dbo].[ApplicationLogs]" +
+            ////Searches for the log with the matching type
+            //"WHERE [LogEntryType] = " + type + " and " +
+            ////Searches for a log from midnight on the earliest date to ll:59:59PM on the last date
+            //"[Timestamp] >= " + from + " 00:00:00 and [Timestamp] <= " + to + " 23:59:59 ";
+            _adapter = new SqlDataAdapter
+            {
+                SelectCommand = new SqlCommand(queryString, connection)
+            };
+
+            _adapter.Fill(_dt);
+
+            List<SlimLog> logs = new List<Models.SlimLog>(_dt.Rows.Count);
+
+            if (_dt.Rows.Count > 0)
+            {
+                foreach (DataRow logrecord in _dt.Rows)
+                {
+                    logs.Add(new SlimLog.SlimReadLog(logrecord));
+                }
             }
+
+            return logs;
         }
 
         //// GET: api/Logs
@@ -131,7 +145,7 @@ namespace wwwoodbackend.Controllers
             DataTable _dt = new DataTable();
             //var query = "SELECT * FROM [Auditing].[dbo].[ApplicationLogs]";
 
-            var query = 
+            var query1 = 
             "SELECT TOP (10) " +
             "[LogEntryId]," +
             "[Timestamp]," +
@@ -160,7 +174,7 @@ namespace wwwoodbackend.Controllers
             "FROM [Auditing].[dbo].[ApplicationLogs]";
             _adapter = new SqlDataAdapter
             {
-                SelectCommand = new SqlCommand(query, connection)
+                SelectCommand = new SqlCommand(query1, connection)
             };
 
             _adapter.Fill(_dt);

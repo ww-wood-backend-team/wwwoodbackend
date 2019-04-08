@@ -42,7 +42,7 @@ namespace wwwoodbackend.Models
             Timestamp = row["Timestamp"].ToString();
             LogEntryType = row["LogEntryType"].ToString();
             Message = row["Message"].ToString();
-            ExceptionJson = row["ExceptionJson"].ToString().Replace("\r\n", String.Empty);
+            ExceptionJson = row["ExceptionJson"].ToString().Replace("\r\n", String.Empty).Replace("\\r\\n", String.Empty);
             FileName = row["FileName"].ToString();
             MethodName = row["MethodName"].ToString();
             LineNumber = Convert.ToInt32(row["LineNumber"]);
