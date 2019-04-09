@@ -235,7 +235,34 @@ namespace wwwoodbackend.Controllers
             return logs;
         }
 
+        //// GET: api/Logs/getlatest/5
+        [HttpGet("/getlatest/{id}")]
+        [EnableCors("AllowAllHeaders")]
+        public IEnumerable<SlimLog> getLatest(long id)
+        {
+            SqlConnection connection = new SqlConnection("Server=13.65.80.168,1433;Database=Auditing;User Id=semocapstone;Password=Capstone2019;Connection Timeout=300");
+            connection.Open();
+            DataTable _dt = new DataTable();
+            var queryString =
+               "SELECT * FROM [Auditing].[dbo].[ApplicationLogs] WHERE [LogEntryId] > " + id;
+            _adapter = new SqlDataAdapter
+            {
+                SelectCommand = new SqlCommand(queryString, connection)
+            };
 
+            _adapter.Fill(_dt);
+
+            List<SlimLog> logs = new List<Models.SlimLog>(_dt.Rows.Count);
+
+            if (_dt.Rows.Count > 0)
+            {
+                foreach (DataRow logrecord in _dt.Rows)
+                {
+                    logs.Add(new SlimLog.SlimReadLog(logrecord));
+                }
+            }
+            return logs;
+        }
     }
 
 }
