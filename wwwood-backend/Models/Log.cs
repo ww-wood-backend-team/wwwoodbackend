@@ -9,7 +9,7 @@ namespace wwwoodbackend.Models
         [Key]
         public long LogEntryId { get; set; }
         public string Timestamp { get; set; }
-        public string LogEntryType { get; set; }
+        public LogType LogEntryType { get; set; }
         public string Message { get; set; }
         public string ExceptionJson { get; set; }
         public string FileName { get; set; }
@@ -40,7 +40,7 @@ namespace wwwoodbackend.Models
         {
             LogEntryId = Convert.ToInt32(row["LogEntryId"]);
             Timestamp = row["Timestamp"].ToString();
-            LogEntryType = row["LogEntryType"].ToString();
+            LogEntryType = this.LogTypeStringToLogType(row["LogEntryType"].ToString());
             Message = row["Message"].ToString();
             ExceptionJson = row["ExceptionJson"].ToString().Replace("\r\n", String.Empty).Replace("\\r\\n", String.Empty);
             FileName = row["FileName"].ToString();
@@ -65,11 +65,24 @@ namespace wwwoodbackend.Models
 
         }
 
-
+        LogType LogTypeStringToLogType(string logType)
+        {
+            switch(logType)
+            {
+                case "Exception":
+                    return LogType.Exception;
+                case "Warning":
+                    return LogType.Warnning;
+                case "Information":
+                    return LogType.Information;
+                default:
+                    return LogType.None;
+            }
+        }
 
         public long LogEntryId { get; set; }
         public string Timestamp { get; set; }
-        public string LogEntryType { get; set; }
+        public LogType LogEntryType { get; set; }
         public string Message { get; set; }
         public string ExceptionJson { get; set; }
         public string FileName { get; set; }

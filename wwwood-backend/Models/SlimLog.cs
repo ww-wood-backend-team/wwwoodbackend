@@ -8,8 +8,9 @@ namespace wwwoodbackend.Models
     {
         [Key]
         public long LogEntryId { get; set; }
+        public string Message { get; set; }
         public string Timestamp { get; set; }
-        public string LogEntryType{get; set;}
+        public LogType LogEntryType{get; set;}
 
 
         public class SlimReadLog : SlimLog
@@ -17,13 +18,30 @@ namespace wwwoodbackend.Models
             public SlimReadLog(DataRow row)
             {
                 LogEntryId = Convert.ToInt32(row["LogEntryId"]);
+                Message = row["Message"].ToString();
                 Timestamp = row["Timestamp"].ToString();
-                LogEntryType = row["LogEntryType"].ToString();
+                LogEntryType = this.LogTypeStringToLogType(row["LogEntryType"].ToString());
+            }
+
+            LogType LogTypeStringToLogType(string logType)
+            {
+                switch (logType)
+                {
+                    case "Exception":
+                        return LogType.Exception;
+                    case "Warning":
+                        return LogType.Warnning;
+                    case "Information":
+                        return LogType.Information;
+                    default:
+                        return LogType.None;
+                }
             }
 
             public long LogEntryId { get; set; }
+            public string Message { get; set; }
             public string Timestamp { get; set; }
-            public string LogEntryType { get; set; }
+            public LogType LogEntryType { get; set; }
         }
     }
 }
